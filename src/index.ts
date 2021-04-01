@@ -18,19 +18,29 @@ const ripstat = ( filePath: string, timeout?: number ): Promise<Stats> => {
 
     const req = new FSReqCallback ( true );
 
-    req.oncomplete = ( error: Error, statsdata: bigint[] ): void => {
+    req.oncomplete = ( error: NodeJS.ErrnoException, statsdata: bigint[] ): void => {
 
       if ( error ) {
 
-        afs.statRetry ( timeout || RETRY_TIMEOUT )( filePath, { bigint: true } ).then ( nstats => {
+        const {code} = error;
 
-          const statsdata = [nstats.dev, nstats.mode, nstats.nlink, nstats.uid, nstats.gid, nstats.rdev, nstats.blksize, nstats.ino, nstats.size, nstats.blocks, 0n, nstats.atimeNs, 0n, nstats.mtimeNs, 0n, nstats.ctimeNs, 0n, nstats.birthtimeNs];
+        if ( code === 'EMFILE' || code === 'ENFILE' || code === 'EAGAIN' || code === 'EBUSY' || code === 'EACCESS' || code === 'EACCS' || code === 'EPERM' ) { // Retriable error
 
-          const stats = new Stats ( statsdata );
+          afs.statRetry ( timeout || RETRY_TIMEOUT )( filePath, { bigint: true } ).then ( nstats => {
 
-          resolve ( stats );
+            const statsdata = [nstats.dev, nstats.mode, nstats.nlink, nstats.uid, nstats.gid, nstats.rdev, nstats.blksize, nstats.ino, nstats.size, nstats.blocks, 0n, nstats.atimeNs, 0n, nstats.mtimeNs, 0n, nstats.ctimeNs, 0n, nstats.birthtimeNs];
 
-        }, reject );
+            const stats = new Stats ( statsdata );
+
+            resolve ( stats );
+
+          }, reject );
+
+        } else {
+
+          reject ( error );
+
+        }
 
       } else {
 
