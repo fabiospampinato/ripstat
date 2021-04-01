@@ -1,0 +1,41 @@
+{
+  "name": "ripstat",
+  "description": "Fetch the stats for a file as if a saber-tooth tiger is chasing you!",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "benchmark": "node tasks/benchmark.js",
+    "clean": "rimraf dist",
+    "compile": "tsc --skipLibCheck && tstei",
+    "compile:watch": "tsc --skipLibCheck --watch",
+    "test": "node test/index.js",
+    "prepublishOnly": "npm run clean && npm run compile && npm run test"
+  },
+  "bugs": {
+    "url": "https://github.com/fabiospampinato/ripstat/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Fabio Spampinato",
+    "email": "spampinabio@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiospampinato/ripstat.git"
+  },
+  "keywords": [
+    "file",
+    "stats",
+    "fast"
+  ],
+  "dependencies": {
+    "atomically": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.2.3",
+    "typescript-transform-export-interop": "^1.0.2"
+  }
+}
