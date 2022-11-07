@@ -1,16 +1,16 @@
 
 /* IMPORT */
 
-import afs from 'atomically/dist/utils/fs';
-import {toNamespacedPath} from 'path';
-import {RETRY_TIMEOUT} from './consts';
+import {toNamespacedPath} from 'node:path';
+import fs from 'stubborn-fs';
+import {RETRY_TIMEOUT} from './constants';
 import Stats from './stats';
 
 /* HELPERS */
 
 const {stat, FSReqCallback} = process['binding']( 'fs' );
 
-/* RIPSTAT */
+/* MAIN */
 
 const ripstat = ( filePath: string, timeout?: number ): Promise<Stats> => {
 
@@ -26,7 +26,7 @@ const ripstat = ( filePath: string, timeout?: number ): Promise<Stats> => {
 
         if ( code === 'EMFILE' || code === 'ENFILE' || code === 'EAGAIN' || code === 'EBUSY' || code === 'EACCESS' || code === 'EACCS' || code === 'EPERM' ) { // Retriable error
 
-          afs.statRetry ( timeout || RETRY_TIMEOUT )( filePath, { bigint: true } ).then ( nstats => {
+          fs.retry.stat ( timeout || RETRY_TIMEOUT )( filePath, { bigint: true } ).then ( nstats => {
 
             const statsdata = [nstats.dev, nstats.mode, nstats.nlink, nstats.uid, nstats.gid, nstats.rdev, nstats.blksize, nstats.ino, nstats.size, nstats.blocks, 0n, nstats.atimeNs, 0n, nstats.mtimeNs, 0n, nstats.ctimeNs, 0n, nstats.birthtimeNs];
 
@@ -61,4 +61,4 @@ const ripstat = ( filePath: string, timeout?: number ): Promise<Stats> => {
 /* EXPORT */
 
 export default ripstat;
-export {Stats};
+export type {Stats};

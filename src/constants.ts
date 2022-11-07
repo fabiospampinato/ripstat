@@ -1,5 +1,5 @@
 
-/* CONSTS */
+/* MAIN */
 
 const IS_WINDOWS = ( process.platform === 'win32' );
 

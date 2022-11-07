@@ -1,14 +1,14 @@
 
 /* IMPORT */
 
-import {IS_WINDOWS, MAX_SAFE_INTEGER, S_IFBLK, S_IFCHR, S_IFDIR, S_IFIFO, S_IFLNK, S_IFMT, S_IFREG, S_IFSOCK} from './consts';
+import {IS_WINDOWS, MAX_SAFE_INTEGER, S_IFBLK, S_IFCHR, S_IFDIR, S_IFIFO, S_IFLNK, S_IFMT, S_IFREG, S_IFSOCK} from './constants';
 
 /* HELPERS */
 
 const {floor} = Math;
 const toNumber = Number;
 
-/* STATS */
+/* MAIN */
 
 class Stats {
 
@@ -77,6 +77,7 @@ class Stats {
     return !IS_WINDOWS && this._isMode ( S_IFBLK );
 
   }
+
   isCharacterDevice (): boolean {
 
     return this._isMode ( S_IFCHR );

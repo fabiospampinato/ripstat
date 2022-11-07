@@ -1,14 +1,16 @@
 
 /* IMPORT */
 
-const afs = require ( 'atomically/dist/utils/fs' ).default,
-      fs = require ( 'fs' ),
-      ripstat = require ( '../dist' ).default,
-      {filesPaths} = require ( '../test/populate' )();
+import fs from 'node:fs';
+import sfs from 'stubborn-fs';
+import ripstat from '../dist/index.js';
+import populate from '../test/populate.js';
 
-/* BENCHMARK */
+/* MAIN */
 
-const benchmark = async () => {
+const main = async () => {
+
+  const {filesPaths, dispose} = populate ();
 
   console.time ( 'fs.promises.stat' );
   await Promise.all ( filesPaths.map ( filePath => {
@@ -22,11 +24,11 @@ const benchmark = async () => {
   });
   console.timeEnd('fs.statSync');
 
-  console.time ( 'atomically.stat' );
+  console.time ( 'stubborn-fs.stat' );
   await Promise.all ( filesPaths.map ( filePath => {
-    return afs.statRetry ( 20000 )( filePath, { bigint: true } );
+    return sfs.retry.stat ( 20000 )( filePath, { bigint: true } );
   }));
-  console.timeEnd ( 'atomically.stat' );
+  console.timeEnd ( 'stubborn-fs.stat' );
 
   console.time ( 'ripstat' );
   await Promise.all ( filesPaths.map ( filePath => {
@@ -34,8 +36,10 @@ const benchmark = async () => {
   }));
   console.timeEnd ( 'ripstat' );
 
+  dispose ();
+
 };
 
-/* RUN */
+/* RUNNING */
 
-benchmark ();
+main ();

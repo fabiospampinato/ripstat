@@ -1,16 +1,16 @@
 
 /* IMPORT */
 
-const {strictEqual} = require ( 'assert' ),
-      fs = require ( 'fs' ),
-      ripstat = require ( '../dist' ).default,
-      populate = require ( './populate' );
+import {strictEqual} from 'node:assert';
+import fs from 'node:fs';
+import ripstat from '../dist/index.js';
+import populate from './populate.js';
 
-/* TEST */
+/* MAIN */
 
-const test = async () => {
+const main = async () => {
 
-  const {filesPaths} = populate ();
+  const {filesPaths, dispose} = populate ();
 
   for ( const filePath of filesPaths.slice ( 0, 100 ) ) {
 
@@ -41,8 +41,10 @@ const test = async () => {
 
   }
 
+  dispose ();
+
 };
 
-/* RUN */
+/* RUNNING */
 
-test ();
+main ();
