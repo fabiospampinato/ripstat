@@ -8,12 +8,14 @@
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "benchmark": "node tasks/benchmark.js",
+    "benchmark": "tsex benchmark",
+    "benchmark:watch": "tsex benchmark --watch",
     "clean": "tsex clean",
     "compile": "tsex compile",
     "compile:watch": "tsex compile --watch",
-    "test": "node test/index.js",
-    "prepublishOnly": "npm run clean && npm run compile && npm run test"
+    "test": "tsex test",
+    "test:watch": "tsex test --watch",
+    "prepublishOnly": "tsex prepare"
   },
   "keywords": [
     "file",
@@ -21,11 +23,12 @@
     "fast"
   ],
   "dependencies": {
-    "stubborn-fs": "^1.2.1"
+    "stubborn-fs": "^1.2.2"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "tsex": "^1.1.2",
-    "typescript": "^4.8.4"
+    "@types/node": "^18.13.0",
+    "fava": "^0.1.0",
+    "tsex": "^2.1.0",
+    "typescript": "^4.9.5"
   }
 }

@@ -1,50 +1,50 @@
 
 /* IMPORT */
 
-import {strictEqual} from 'node:assert';
+import {describe} from 'fava';
 import fs from 'node:fs';
 import ripstat from '../dist/index.js';
 import populate from './populate.js';
 
 /* MAIN */
 
-const main = async () => {
+describe ( 'ripstat', it => {
 
-  const {filesPaths, dispose} = populate ();
+  it ( 'works', async t => {
 
-  for ( const filePath of filesPaths.slice ( 0, 100 ) ) {
+    const {filesPaths, dispose} = populate ();
 
-    const stats = fs.statSync ( filePath, { bigint: true } );
-    const ripstats = await ripstat ( filePath );
+    for ( const filePath of filesPaths.slice ( 0, 100 ) ) {
 
-    strictEqual ( true, stats.dev == ripstats.dev, 'dev' );
-    strictEqual ( true, stats.mode == ripstats.mode, 'mode' );
-    strictEqual ( true, stats.nlink == ripstats.nlink, 'nlink' );
-    strictEqual ( true, stats.uid == ripstats.uid, 'uid' );
-    strictEqual ( true, stats.gid == ripstats.gid, 'gid' );
-    strictEqual ( true, stats.rdev == ripstats.rdev, 'rdev' );
-    strictEqual ( true, stats.blksize == ripstats.blksize, 'blksize' );
-    strictEqual ( true, stats.ino == ripstats.ino, 'ino' );
-    strictEqual ( true, stats.size == ripstats.size, 'size' );
-    strictEqual ( true, stats.blocks == ripstats.blocks, 'blocks' );
-    strictEqual ( true, stats.atimeMs == ripstats.atimeMs, 'atimeMs' );
-    strictEqual ( true, stats.mtimeMs == ripstats.mtimeMs, 'mtimeMs' );
-    strictEqual ( true, stats.ctimeMs == ripstats.ctimeMs, 'ctimeMs' );
-    strictEqual ( true, stats.birthtimeMs == ripstats.birthtimeMs, 'birthtimeMs' );
-    strictEqual ( true, stats.isDirectory () == ripstats.isDirectory (), 'isDirectory' );
-    strictEqual ( true, stats.isFile () == ripstats.isFile (), 'isFile' );
-    strictEqual ( true, stats.isBlockDevice () == ripstats.isBlockDevice (), 'isBlockDevice' );
-    strictEqual ( true, stats.isCharacterDevice () == ripstats.isCharacterDevice (), 'isCharacterDevice' );
-    strictEqual ( true, stats.isSymbolicLink () == ripstats.isSymbolicLink (), 'isSymbolicLink' );
-    strictEqual ( true, stats.isFIFO () == ripstats.isFIFO (), 'isFIFO' );
-    strictEqual ( true, stats.isSocket () == ripstats.isSocket (), 'isSocket' );
+      const stats = fs.statSync ( filePath, { bigint: true } );
+      const ripstats = await ripstat ( filePath );
 
-  }
+      t.true ( stats.dev == ripstats.dev );
+      t.true ( stats.mode == ripstats.mode );
+      t.true ( stats.nlink == ripstats.nlink );
+      t.true ( stats.uid == ripstats.uid );
+      t.true ( stats.gid == ripstats.gid );
+      t.true ( stats.rdev == ripstats.rdev );
+      t.true ( stats.blksize == ripstats.blksize );
+      t.true ( stats.ino == ripstats.ino );
+      t.true ( stats.size == ripstats.size );
+      t.true ( stats.blocks == ripstats.blocks );
+      t.true ( stats.atimeMs == ripstats.atimeMs );
+      t.true ( stats.mtimeMs == ripstats.mtimeMs );
+      t.true ( stats.ctimeMs == ripstats.ctimeMs );
+      t.true ( stats.birthtimeMs == ripstats.birthtimeMs );
+      t.true ( stats.isDirectory () == ripstats.isDirectory () );
+      t.true ( stats.isFile () == ripstats.isFile () );
+      t.true ( stats.isBlockDevice () == ripstats.isBlockDevice () );
+      t.true ( stats.isCharacterDevice () == ripstats.isCharacterDevice () );
+      t.true ( stats.isSymbolicLink () == ripstats.isSymbolicLink () );
+      t.true ( stats.isFIFO () == ripstats.isFIFO () );
+      t.true ( stats.isSocket () == ripstats.isSocket () );
 
-  dispose ();
+    }
 
-};
+    dispose ();
 
-/* RUNNING */
+  });
 
-main ();
+});

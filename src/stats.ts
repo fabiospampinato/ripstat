@@ -43,14 +43,14 @@ class Stats {
     this.ino = ( stats[7] <= MAX_SAFE_INTEGER ) ? toNumber ( stats[7] ) : stats[7];
     this.size = toNumber ( stats[8] );
     this.blocks = toNumber ( stats[9] );
-    this.atimeMs = ( toNumber ( stats[10] ) * 1000 ) + floor ( toNumber ( stats[11] ) / 1000000 );
-    this.mtimeMs = ( toNumber ( stats[12] ) * 1000 ) + floor ( toNumber ( stats[13] ) / 1000000 );
-    this.ctimeMs = ( toNumber ( stats[14] ) * 1000 ) + floor ( toNumber ( stats[15] ) / 1000000 );
-    this.birthtimeMs = ( toNumber ( stats[16] ) * 1000 ) + floor ( toNumber ( stats[17] ) / 1000000 );
+    this.atimeMs = ( toNumber ( stats[10] ) * 1000 ) + floor ( toNumber ( stats[11] ) / 1_000_000 );
+    this.mtimeMs = ( toNumber ( stats[12] ) * 1000 ) + floor ( toNumber ( stats[13] ) / 1_000_000 );
+    this.ctimeMs = ( toNumber ( stats[14] ) * 1000 ) + floor ( toNumber ( stats[15] ) / 1_000_000 );
+    this.birthtimeMs = ( toNumber ( stats[16] ) * 1000 ) + floor ( toNumber ( stats[17] ) / 1_000_000 );
 
   }
 
-  /* HELPERS */
+  /* PRIVATE API */
 
   private _isMode ( mode: number ): boolean {
 
