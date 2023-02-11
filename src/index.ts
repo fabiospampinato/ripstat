@@ -29,8 +29,6 @@ const ripstat = ( filePath: string, timeout?: number ): Promise<Stats> => {
 
           fs.retry.stat ( timeout || RETRY_TIMEOUT )( filePath, { bigint: true } ).then ( nstats => {
 
-            if ( !nstats || !( 'atimeNs' in nstats ) ) return reject ();
-
             const statsdata = [nstats.dev, nstats.mode, nstats.nlink, nstats.uid, nstats.gid, nstats.rdev, nstats.blksize, nstats.ino, nstats.size, nstats.blocks, 0n, nstats.atimeNs, 0n, nstats.mtimeNs, 0n, nstats.ctimeNs, 0n, nstats.birthtimeNs];
 
             const stats = new Stats ( statsdata );

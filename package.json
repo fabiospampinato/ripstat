@@ -23,7 +23,7 @@
     "fast"
   ],
   "dependencies": {
-    "stubborn-fs": "^1.2.2"
+    "stubborn-fs": "^1.2.4"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
